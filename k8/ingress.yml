@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
+    kubernetes.io/ingress.class: public
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   name: prioratus-ingress
 spec:
@@ -19,4 +20,4 @@ spec:
   tls:
     - hosts:
         - przeor.jblewandowski.com
-      secretName: prioratus-tls4
+      secretName: prioratus-tls5
