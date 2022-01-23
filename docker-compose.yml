@@ -1,9 +1,0 @@
-version: "3.7"
-
-services:
-  backend: 
-    build: .
-    environment:
-      PORT: 3002
-    ports:
-      - 3002:3002
