@@ -17,18 +17,7 @@ spec:
                 name: backend
                 port:
                   number: 80
-    - host: prioratus.jblewandowski.com
-      http:
-        paths:
-          - path: "/"
-            pathType: Prefix
-            backend:
-              service:
-                name: backend
-                port:
-                  number: 80
   tls:
     - hosts:
         - przeor.jblewandowski.com
-        - prioratus.jblewandowski.com
-      secretName: prioratus-tls3
+      secretName: prioratus-tls4
