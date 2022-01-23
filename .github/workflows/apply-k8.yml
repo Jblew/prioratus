@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "${K8_CLIENT_CERTIFICATE}" > "$HOME/k8_x509_cert.crt"
           echo "${K8_CLIENT_KEY}" > "$HOME/k8_x509_key.key"
-        environment:
+        env:
           K8_CLIENT_CERTIFICATE: ${{ secrets.K8_CLIENT_CERTIFICATE }}
           K8_CLIENT_KEY: ${{ secrets.K8_CLIENT_KEY }}
 
@@ -34,7 +34,7 @@ jobs:
             --client-key "$HOME/k8_x509_key.key" \
             apply \
             -f "k8" --namespace "${K8_NAMESPACE}"
-        environment:
+        env:
           K8_SERVER: "https://katedra2.jblew.pl:16443"
           K8_NAMESPACE: prioratus
 
