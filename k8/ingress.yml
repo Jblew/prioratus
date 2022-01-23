@@ -2,12 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prioratus-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: katedra2.jblew.pl
       http:
         paths:
-          - path: /prioratus
+          - path: "/prioratus(/|$)(.*)"
             pathType: Prefix
             backend:
               service:
