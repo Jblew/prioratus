@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: public
+    # Ingress class must be "public" instead of "nginx" because microk8s ingress is created with argument --ingress-class=public
+    # Explanation: https://stackoverflow.com/questions/54506269/simple-ingress-from-host-with-microk8s
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   name: prioratus-ingress
 spec:
