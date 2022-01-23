@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  backend: 
+    build: services/backend
+    environment:
+      PORT: 3002
+    ports:
+      - 3002:3002
+  frontend: 
+    build: services/frontend
+    ports:
+      - 3003:80

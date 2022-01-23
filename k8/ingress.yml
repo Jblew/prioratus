@@ -12,21 +12,35 @@ spec:
     - host: przeor.jblewandowski.com
       http:
         paths:
-          - path: "/"
+          - path: "/api"
             pathType: Prefix
             backend:
               service:
                 name: backend
                 port:
                   number: 80
-    - host: prioratus.jblewandowski.com
-      http:
-        paths:
           - path: "/"
             pathType: Prefix
             backend:
               service:
+                name: frontend
+                port:
+                  number: 80
+    - host: prioratus.jblewandowski.com
+      http:
+        paths:
+          - path: "/api"
+            pathType: Prefix
+            backend:
+              service:
                 name: backend
+                port:
+                  number: 80
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
                 port:
                   number: 80
   tls:
