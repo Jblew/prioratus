@@ -1,6 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
   name: prioratus-ingress
 spec:
   rules:
@@ -24,3 +26,8 @@ spec:
                 name: backend
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - przeor.jblewandowski.com
+        - prioratus.jblewandowski.com
+      secretName: prioratus-tls
