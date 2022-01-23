@@ -31,4 +31,4 @@ spec:
     - hosts:
         - przeor.jblewandowski.com
         - prioratus.jblewandowski.com
-      secretName: prioratus-tls2
+      secretName: prioratus-tls3
