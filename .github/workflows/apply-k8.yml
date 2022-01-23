@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: app using doctl kubectl
+    name: Deploy to katedra2
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
