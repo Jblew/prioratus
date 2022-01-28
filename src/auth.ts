@@ -1,4 +1,6 @@
 import { auth } from "express-openid-connect";
+import { requiresAuth as oidcRequiresAuth } from "express-openid-connect";
+import { RequestHandler } from "express";
 
 export function getAuthMiddleware() {
   return auth({
@@ -12,6 +14,10 @@ export function getAuthMiddleware() {
       callback: "auth_callback",
     },
   });
+}
+
+export function requiresAuth(): RequestHandler {
+  return oidcRequiresAuth();
 }
 
 function envMust(name: string): string {
