@@ -88,3 +88,30 @@ It is possible to make the database-domain layer. Database is already well suite
 3. Database would need to contain both domain model as well as specific implementation related tables for all processing functions. Solution to that is to create separate schemas: we could have domain schema managed by the orm-less migration tool Squitch as well as specific schemas managed separately by a specific ORM of each processing function separately.
 4. Database is fairly complex in terms of defining behaviour. Shure, we can define triggers, views and functions but development and testing in SQL is costly and a company may quickly find itself in a need of expensive SQL developers.
 
+
+
+There is also another way of defining domain model that would break nor DDD nor 3FA rules: we can draw the isolation line through the database treating it as a communication tool for our microservices:
+
+
+
+## The database as interface approach
+
+In the microservice world we endeavour towards the "share nothing" approach in which the microservices doesnt share anything. The truth is that we cannot reach share nothing at least in terms of abstraction. We have to at least share the communication interfaces definition thus drawing the dependency lines towards some microservice or repository or specification which acts as a common interface for defining communication.
+
+For the purpose of communication between microservices there is the "dumb pipe, smart service" approach in which we want to handle communication errors and cornercases inside the services so that there is no complexity on the "pipe" side, thus no "pipe-team" is needed. 
+
+As a pipe the ephemeral means like REST apis are most commonly used although there may be benefits from using log-preserving, stateful pipes like database tables. Mainly we can achieve the ability to reply broken communication.
+
+In the below example we use database as such a communication "pipe" or interface. The first diagram is a dependency diagram showing that in fact there exists a domain package which is on the top of dependency diagram. The database structure is dependant on the domain through the ORM package which contains the code for entities and is used to generate tables and entities.
+
+In this approach the microservices (called microservices when they store some state) or functions (when they need not store any data thus they do not have any state) are dependent on the database table definitions which are dependent on the main domain.
+
+![Database as interface](./img/database-as-interface.png)
+
+![Sharing state through database](./img/sharing-state-through-database.png)
+
+The lower diagram shows communication. It is important to note that command and response tables should not be called that way. To achieve full DDD, we should model them after real-world objects. For example the main domain may want to shed the responsibility of sending messages to users onto a microservice but it still may want to be able to access some common information about the messages sent, in this approach the system woul have the below look:
+
+![Example 3FA DDD](./img/example-ddd-3fa.png)
+
+Here we have two entities of which one is a request and the second one is a response. Note that in this system the domain wants only to know about failures to send (e.g. to ask user to reconfigure message sender) but does not want to know about successful sends. Of course the microservice can keep track of successes but it is of no interest to the domain.
