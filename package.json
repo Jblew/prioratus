@@ -47,5 +47,6 @@
   },
   "devDependencies": {
     "@types/three": "^0.137.0"
-  }
+  },
+  "proxy": "http://localhost:3002"
 }
