@@ -1,8 +1,12 @@
-export async function getFromApi<T>(endpointURL: string): Promise<T> {
+export function getApiURL(endpointURL: string): string {
   const apiURL = "/api";
-  const fullURL = endpointURL.startsWith("/")
+  return endpointURL.startsWith("/")
     ? `${apiURL}${endpointURL}`
     : `${apiURL}/${endpointURL}`;
+}
+
+export async function getFromApi<T>(endpointURL: string): Promise<T> {
+  const fullURL = getApiURL(endpointURL);
   const resp = await fetch(fullURL);
   if (resp.status !== 200) {
     throw new ApiHTTPError(

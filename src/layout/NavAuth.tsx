@@ -1,4 +1,4 @@
-import { getAuthState, onAuthStateChanged } from "auth";
+import { getAuthState, getLoginURL, logOut, onAuthStateChanged } from "auth";
 import { useEffect, useState } from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,7 @@ export function NavAuth() {
     return function cleanup() {
       unsubscribe();
     };
-  });
+  }, []);
 
   if (authState.loading) {
     return (
@@ -30,14 +30,13 @@ export function NavAuth() {
     );
   } else if (authState.profile) {
     return (
-      <NavDropdown
-        title={authState.profile.displayName}
-        id="basic-nav-dropdown"
-      >
-        <NavDropdown.Item>{t("Log out")}</NavDropdown.Item>
+      <NavDropdown title={authState.profile.name} id="basic-nav-dropdown">
+        <NavDropdown.Item onClick={() => logOut()}>
+          {t("Log out")}
+        </NavDropdown.Item>
       </NavDropdown>
     );
   }
 
-  return <Nav.Item>{t("Log in")}</Nav.Item>;
+  return <Nav.Link href={getLoginURL()}>{t("Log in")}</Nav.Link>;
 }

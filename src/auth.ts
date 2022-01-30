@@ -1,4 +1,4 @@
-import { ApiHTTPError, getFromApi } from "api";
+import { ApiHTTPError, getApiURL, getFromApi } from "api";
 
 export interface AuthState {
   loading: boolean;
@@ -8,7 +8,9 @@ export interface AuthState {
 
 export interface UserProfile {
   name: string;
-  displayName: string;
+  nickname: string;
+  picture?: string;
+  email: string;
 }
 
 export type AuthStateSubscriberFn = (authState: AuthState) => void;
@@ -21,6 +23,14 @@ export function onAuthStateChanged(subscribeFn: AuthStateSubscriberFn): {
   return {
     unsubscribe: () => removeSubscriber(subscribeFn),
   };
+}
+
+export async function logOut() {
+  await getFromApi<UserProfile>("/logout");
+}
+
+export function getLoginURL() {
+  return getApiURL("/login");
 }
 
 (window as any).currentAuthState = loadingAuthState();
