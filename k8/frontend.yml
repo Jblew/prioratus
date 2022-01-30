@@ -18,9 +18,9 @@ spec:
   template:
     metadata: { labels: { service: frontend } }
     spec:
-#     imagePullSecrets: [{ name: dockerconfigjson-github-com }] # If the image was private on ghcr.io (consult 1myears/totus or 1myears/extensa-deploy)
+      # imagePullSecrets: [{ name: dockerconfigjson-github-com }] # If the image was private on ghcr.io (consult 1myears/totus or 1myears/extensa-deploy)
       restartPolicy: Always
       containers:
         - name: frontend
-          image: ghcr.io/jblew/prioratus-frontend:1.0.0
+          image: ghcr.io/jblew/prioratus-frontend:1.1.0
           ports: [{ containerPort: 80 }]
