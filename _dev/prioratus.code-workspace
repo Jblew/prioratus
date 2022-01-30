@@ -8,6 +8,9 @@
 		"github-actions.workflows.pinned.workflows": [
 			".github/workflows/apply-k8.yml",
 			"services/backend/.github/workflows/publish-to-ghcr.yml"
-		]
+		],
+		"editor.formatOnSave": true,
+		"editor.formatOnSaveMode": "file",
+		"editor.formatOnPaste": true
 	}
 }
