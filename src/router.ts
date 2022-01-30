@@ -1,13 +1,15 @@
 import express from "express";
-import { requiresAuth } from "@/auth";
+import { authOr403 } from "@/auth";
+import { envMust } from "./utils";
 
+const frontendRecirectURL = envMust("FRONTEND_RECIRECT_URL");
 export function getRoutes() {
   const router = express.Router();
-  router.get("/", (req, res) => {
-    res.send("Hello World!");
+  router.get("/", (_req, res) => {
+    res.redirect(frontendRecirectURL);
   });
 
-  router.get("/profile", requiresAuth(), (req, res) => {
+  router.get("/profile", authOr403(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
   });
   return router;

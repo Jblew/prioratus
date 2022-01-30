@@ -1,6 +1,6 @@
 import { auth } from "express-openid-connect";
-import { requiresAuth as oidcRequiresAuth } from "express-openid-connect";
 import { RequestHandler } from "express";
+import { envMust } from "./utils";
 
 export function getAuthMiddleware() {
   return auth({
@@ -16,12 +16,13 @@ export function getAuthMiddleware() {
   });
 }
 
-export function requiresAuth(): RequestHandler {
-  return oidcRequiresAuth();
-}
-
-function envMust(name: string): string {
-    const v = process.env[name]
-    if (typeof v === "undefined") throw new Error(`Missing env ${name}`)
-    return v
+export function authOr403(): RequestHandler {
+  return function (req, res, next) {
+    if (!req.oidc.isAuthenticated()) {
+      res.status(403).send({
+        error: `Authentication required. Redirect user to login endpoint`,
+      });
+    }
+    next();
+  };
 }
