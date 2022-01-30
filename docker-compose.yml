@@ -1,18 +1,29 @@
 version: "3.8"
 
 services:
+  # ingress:
+  #   image: ghcr.io/1myears/simple_router:1.2.3
+  #   ports:
+  #     - 80:80
+  #   environment:
+  #     PROXIES: >
+  #       [
+  #         { "base": "/api", "to": "http://backend:80" },
+  #         { "base": "", "to": "http://frontend:80" }
+  #       ]
   backend:
     build: services/backend
     environment:
-      PORT: 3002
+      PORT: 80
       ROUTE_BASE: '/api'
       BASE_URL: http://localhost:3002/api
+      FRONTEND_RECIRECT_URL: http://localhost:3000/
       OIDC_ISSUER_BASEURL: https://prioratus.eu.auth0.com
       OIDC_AUTH_SECRET: ${OIDC_AUTH_SECRET}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
     ports:
-      - 3002:3002
+      - 3002:80
   frontend:
     build: services/frontend
     ports:
-      - 3003:80
+      - 3000:80
