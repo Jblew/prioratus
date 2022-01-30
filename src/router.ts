@@ -9,6 +9,10 @@ export function getRoutes() {
     res.redirect(frontendRecirectURL);
   });
 
+  router.get("/health", authOr403(), (req, res) => {
+    res.send({ ok: true });
+  });
+
   router.get("/profile", authOr403(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
   });
