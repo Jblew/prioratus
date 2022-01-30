@@ -1,18 +1,13 @@
 import express from "express";
-import { getAuthMiddleware, requiresAuth } from "@/auth";
+import { getAuthMiddleware } from "@/auth";
+import { getRoutes } from "./router";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const routeBase = process.env.ROUTE_BASE || "/";
 
-app.use(getAuthMiddleware())
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
+app.use(getAuthMiddleware());
+app.use(routeBase, getRoutes());
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
