@@ -1,10 +1,11 @@
-import { ApiHTTPError, getApiURL, getFromApi } from "api";
-
-export interface AuthState {
-  loading: boolean;
-  error: boolean;
-  profile?: UserProfile;
-}
+import { ApiHTTPError, getFromApi } from "api";
+import {
+  createMachine,
+  DoneInvokeEvent,
+  interpret,
+  assign,
+  State,
+} from "xstate";
 
 export interface UserProfile {
   name: string;
@@ -13,106 +14,106 @@ export interface UserProfile {
   email: string;
 }
 
-export type AuthStateSubscriberFn = (authState: AuthState) => void;
-
-export function onAuthStateChanged(subscribeFn: AuthStateSubscriberFn): {
-  unsubscribe(): void;
-} {
-  addSubscriber(subscribeFn);
-  setAuthStateTimerIfNotSet();
-  return {
-    unsubscribe: () => removeSubscriber(subscribeFn),
-  };
-}
-
-export async function logOut() {
-  await getFromApi<UserProfile>("/logout");
+export function getLogoutURL() {
+  return `${process.env.REACT_APP_LOGOUT_URL}?returnTo=${window.location.origin}`;
 }
 
 export function getLoginURL() {
-  return getApiURL("/login");
+  return `${process.env.REACT_APP_LOGIN_URL}`;
 }
 
-(window as any).currentAuthState = loadingAuthState();
+export type AuthStateName = "loading" | "error" | "loggedIn" | "loggedOut";
+export interface AuthState {
+  state: AuthStateName;
+  profile?: UserProfile;
+}
+
 export function getAuthState(): AuthState {
-  return (window as any).currentAuthState;
+  const interpreter = getOrStartAuthMachineInterpreter();
+  return machineStateToAuthState(interpreter.state as any);
 }
 
-async function checkAuthState() {
-  notifySubscribers(loadingAuthState());
-  try {
-    const profile = await getFromApi<UserProfile>("/profile");
-    setAuthStateAndNotifySubscribers(successAuthState(profile));
-  } catch (err) {
-    if (err instanceof ApiHTTPError && err.code === 403) {
-      setAuthStateAndNotifySubscribers(notLoggedInAuthState());
-    } else {
-      setAuthStateAndNotifySubscribers(errorAuthState());
-      throw err;
+export function onAuthStateChanged(
+  subscriberFn: (authState: AuthState) => void
+): { unsubscribe(): void } {
+  const interpreter = getOrStartAuthMachineInterpreter();
+  return interpreter.subscribe((state) => {
+    if (state.changed) {
+      subscriberFn(machineStateToAuthState(state as any));
     }
+  });
+}
+
+const authMachine = createMachine(
+  {
+    id: "auth",
+    initial: "loading",
+    context: {
+      profile: undefined as UserProfile | undefined,
+    },
+    states: {
+      loading: {
+        invoke: {
+          src: "getProfile",
+          onDone: {
+            target: "loggedIn",
+            actions: [
+              "logSuccess",
+              assign({
+                profile: (_ctx, evt: DoneInvokeEvent<UserProfile>) => evt.data,
+              }),
+            ],
+          },
+          onError: [
+            {
+              target: "loggedOut",
+              cond: (_ctx, evt: DoneInvokeEvent<ApiHTTPError>) =>
+                evt.data.code === 403,
+            },
+            { target: "error", actions: "logError" },
+          ],
+        },
+      },
+      error: {
+        after: { [1 * 60 * 1000]: { target: "loading" } },
+      },
+      loggedOut: {
+        entry: "resetProfile",
+        after: { [15 * 60 * 1000]: { target: "loading" } },
+      },
+      loggedIn: {
+        after: { [15 * 60 * 1000]: { target: "loading" } },
+      },
+    },
+  },
+  {
+    services: {
+      getProfile: () => getFromApi<UserProfile>("/profile"),
+    },
+    actions: {
+      logError: (_ctx, evt) => console.error(evt.data),
+      logSuccess: (_ctx, _evt) => console.log("Logged in"),
+      resetProfile: assign<any>({ profile: undefined }),
+    },
   }
+);
+
+function interpretAuthMachine() {
+  return interpret(authMachine);
 }
 
-function loadingAuthState(): AuthState {
-  return { loading: true, error: false };
-}
-
-function errorAuthState(): AuthState {
-  return { loading: false, error: true };
-}
-
-function successAuthState(profile: UserProfile): AuthState {
-  return { loading: false, error: false, profile };
-}
-
-function notLoggedInAuthState(): AuthState {
-  return { loading: false, error: false };
-}
-
-(window as any).authStateTimer = null;
-function setAuthStateTimerIfNotSet() {
-  if (!(window as any).authStateTimer) {
-    checkAuthStateLoop();
+function getOrStartAuthMachineInterpreter(): ReturnType<
+  typeof interpretAuthMachine
+> {
+  if (!(window as any).authMachineInterpreter) {
+    (window as any).authMachineInterpreter = interpretAuthMachine().start();
   }
+  return (window as any).authMachineInterpreter;
 }
 
-async function checkAuthStateLoop() {
-  const intervalSuccessMs = 30 * 60 * 1000; // 30 minutes
-  const intervalErrorMs = 2 * 60 * 1000; // 2 minute
-
-  try {
-    await checkAuthState();
-    (window as any).authStateTimer = setTimeout(
-      () => checkAuthStateLoop(),
-      intervalSuccessMs
-    );
-  } catch (err) {
-    console.error(err);
-    (window as any).authStateTimer = setTimeout(
-      () => checkAuthStateLoop(),
-      intervalErrorMs
-    );
-  }
-}
-
-function setAuthStateAndNotifySubscribers(authState: AuthState) {
-  (window as any).currentAuthState = authState;
-  notifySubscribers(authState);
-}
-
-(window as any).authStateSubscribers = [];
-function addSubscriber(fn: AuthStateSubscriberFn) {
-  (window as any).authStateSubscribers.push(fn);
-}
-function removeSubscriber(fn: AuthStateSubscriberFn) {
-  const index = (window as any).authStateSubscribers.indexOf(fn);
-  if (index === -1) {
-    throw new Error(`No such subscriber to authState: ${fn}`);
-  }
-  (window as any).authStateSubscribers.splice(index);
-}
-function notifySubscribers(state: AuthState) {
-  (window as any).authStateSubscribers.forEach((subscriberFn: any) =>
-    subscriberFn(state)
-  );
+function machineStateToAuthState(state: State<any>): AuthState {
+  return {
+    state: state.value as any,
+    profile: (state.context as any).profile,
+  };
 }
