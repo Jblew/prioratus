@@ -22,7 +22,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: backend
-          image: ghcr.io/jblew/prioratus-backend:1.2.1
+          image: ghcr.io/jblew/prioratus-backend:1.2.3
           ports: [{ containerPort: 80 }]
           env:
             - name: PORT
