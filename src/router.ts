@@ -9,7 +9,7 @@ export function getRoutes() {
     res.redirect(frontendRecirectURL);
   });
 
-  router.get("/health", authOr403(), (req, res) => {
+  router.get("/health", (req, res) => {
     res.send({ ok: true });
   });
 
