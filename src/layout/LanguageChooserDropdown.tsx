@@ -11,7 +11,10 @@ export function LanguageChooserDropdown() {
   return (
     <NavDropdown title={currentLanguage.name} id="basic-nav-dropdown">
       {availableLanguages.map((lang) => (
-        <NavDropdown.Item onClick={() => changeLanguage(lang.code)}>
+        <NavDropdown.Item
+          onClick={() => changeLanguage(lang.code)}
+          key={lang.code}
+        >
           {lang.name}
         </NavDropdown.Item>
       ))}
