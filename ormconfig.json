@@ -3,7 +3,7 @@
   "host": "db",
   "port": 5432,
   "username": "postgres",
-  "password": "n6uHLuSK9vstd6UqMTUNAYte6KTrQ",
+  "password": "n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ",
   "database": "postgres",
   "synchronize": true,
   "logging": false,
