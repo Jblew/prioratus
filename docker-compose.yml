@@ -27,3 +27,8 @@ services:
     build: services/frontend
     ports:
       - 3000:80
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ
