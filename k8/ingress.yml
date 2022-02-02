@@ -30,14 +30,14 @@ spec:
     - host: prioratus.jblewandowski.com
       http:
         paths:
-          - path: "/api"
+          - path: "/api/?(.*)"
             pathType: Prefix
             backend:
               service:
                 name: backend
                 port:
                   number: 80
-          - path: "/"
+          - path: "/((?!api).*)"
             pathType: Prefix
             backend:
               service:
