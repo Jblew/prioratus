@@ -21,7 +21,6 @@ spec:
       service: dbpod
   serviceName: "db-service"
   replicas: 1
-  strategy: { type: Recreate }
   template:
     metadata:
       labels:
