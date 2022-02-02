@@ -2,22 +2,28 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { User } from "./entity/User";
 
-export function initDatabase() {
-  createConnection()
-    .then(async (connection) => {
-      console.log("Inserting a new user into the database...");
+export async function initDatabase() {
+  const connection = await createConnection();
+
+  async function testDatabase() {
+    try {
+      console.log("[test-database] Inserting a new user into the database...");
       const user = new User();
       user.firstName = "Timber";
       user.lastName = "Saw";
       user.age = 25;
       await connection.manager.save(user);
-      console.log("Saved a new user with id: " + user.id);
+      console.log("[test-database] Saved a new user with id: " + user.id);
 
-      console.log("Loading users from the database...");
+      console.log("[test-database] Loading users from the database...");
       const users = await connection.manager.find(User);
-      console.log("Loaded users: ", users);
-    })
-    .catch((error) => console.log(error));
+      console.log("[test-database] Loaded users: ", users);
+    } catch (err) {
+      console.error("[test-database] Test failed: ", err);
+    }
 
-  setTimeout(() => initDatabase(), 30 * 60 * 1000);
+    setTimeout(() => testDatabase(), 30 * 60 * 1000);
+  }
+
+  await testDatabase();
 }
