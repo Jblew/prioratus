@@ -22,7 +22,7 @@ export async function initDatabase() {
       console.error("[test-database] Test failed: ", err);
     }
 
-    setTimeout(() => testDatabase(), 30 * 60 * 1000);
+    setTimeout(() => testDatabase(), 60 * 1000);
   }
 
   await testDatabase();
