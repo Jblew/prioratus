@@ -14,7 +14,6 @@ metadata:
   labels: { service: backend }
 spec:
   replicas: 1
-  strategy: { type: Recreate }
   selector: { matchLabels: { service: backend } }
   template:
     metadata: { labels: { service: backend } }
