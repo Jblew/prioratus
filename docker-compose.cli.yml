@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  generate_migration:
+    build: services/backend
+    command: npm run typeorm migration:generate -- -n ${MIGRATION_NAME}
+    volumes:
+      - ./services/backend:/app
+    restart: "no"
+    depends_on:
+      - db
+
+  create_migration:
+    build: services/backend
+    command: npm run typeorm migration:generate -- -n ${MIGRATION_NAME}
+    volumes:
+      - ./services/backend:/app
+    restart: "no"
+    depends_on:
+      - db
