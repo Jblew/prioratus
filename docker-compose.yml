@@ -25,7 +25,7 @@ services:
       - 3002:80
     depends_on:
       - db
-    
+
   frontend:
     build: services/frontend
     ports:
@@ -36,3 +36,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ
+    volumes:
+      - db_pgdata:/var/lib/postgresql/data
+
+volumes:
+  db_pgdata:
