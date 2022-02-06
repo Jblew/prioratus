@@ -23,10 +23,14 @@ services:
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
     ports:
       - 3002:80
+    depends_on:
+      - db
+    
   frontend:
     build: services/frontend
     ports:
       - 3000:80
+
   db:
     image: postgres:14.1-alpine
     restart: always
