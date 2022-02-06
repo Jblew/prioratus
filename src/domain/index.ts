@@ -1,3 +1,4 @@
-export * from './LiturgiaHorarum'
-export * from './MessageChannel'
-export * from './User'
+export * from "./LiturgiaHorarum";
+export * from "./Messaging";
+export * from "./User";
+export * from "./Account";

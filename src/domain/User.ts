@@ -7,4 +7,4 @@ export interface User {
   created: Date;
 }
 
-export type UserID = Named<string, User>;
+export type UserID = Named<string, "userID">;
