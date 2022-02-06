@@ -1,19 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from "typeorm";
+import * as domain from "@/domain";
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+export class User implements domain.User {
+  @PrimaryGeneratedColumn("uuid")
+  ID!: domain.UserID;
 
   @Column()
-  firstName!: string;
+  displayName!: string;
 
   @Column()
-  lastName!: string;
+  email!: string;
 
-  @Column()
-  age!: number;
-
-  @Column({ default: 2 })
-  anotherField!: number;
+  @CreateDateColumn()
+  created!: Date;
 }

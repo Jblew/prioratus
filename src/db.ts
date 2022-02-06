@@ -9,11 +9,10 @@ export async function initDatabase() {
     try {
       console.log("[test-database] Inserting a new user into the database...");
       const user = new User();
-      user.firstName = "Timber";
-      user.lastName = "Saw";
-      user.age = 25;
+      user.displayName = "Timber Saw";
+      user.email = "timber@saw";
       await connection.manager.save(user);
-      console.log("[test-database] Saved a new user with id: " + user.id);
+      console.log("[test-database] Saved a new user with id: " + user.ID);
 
       console.log("[test-database] Loading users from the database...");
       const users = await connection.manager.find(User);
