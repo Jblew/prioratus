@@ -8,7 +8,7 @@
     "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/index.js",
     "start:docker": "npm run migration:apply && npm run start",
     "migration:apply": "npm run typeorm migration:run",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+    "typeorm": "TS_NODE_BASEURL=./dist node --require ts-node/register -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "express": "4.17.2",
