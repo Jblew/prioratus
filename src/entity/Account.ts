@@ -2,12 +2,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import * as domain from "@/domain";
 import { User } from "./User";
+import { Message } from "./Message";
 
 @Entity()
 export class Account implements domain.Account {
@@ -20,4 +21,7 @@ export class Account implements domain.Account {
   @ManyToOne((type) => User, (user) => user.accounts)
   @JoinColumn()
   user!: User;
+
+  @OneToMany((type) => Message, (message) => message.account)
+  messages!: Message[];
 }
