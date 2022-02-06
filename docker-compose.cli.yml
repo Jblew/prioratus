@@ -5,16 +5,18 @@ services:
     build: services/backend
     command: npm run typeorm migration:generate -- -n ${MIGRATION_NAME}
     volumes:
-      - ./services/backend:/app
+      # We cannot use service/backend:/app since the probably old dist directory would overrite freshly built in dockerfile dist
+      - ./services/backend/src/migration:/app/src/migration
     restart: "no"
     depends_on:
       - db
 
   create_migration:
     build: services/backend
-    command: npm run typeorm migration:generate -- -n ${MIGRATION_NAME}
+    command: npm run typeorm migration:create -- -n ${MIGRATION_NAME}
     volumes:
-      - ./services/backend:/app
+      # We cannot use service/backend:/app since the probably old dist directory would overrite freshly built in dockerfile dist
+      - ./services/backend/src/migration:/app/src/migration
     restart: "no"
     depends_on:
       - db
