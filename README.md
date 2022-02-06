@@ -7,3 +7,7 @@ Prioratus app: living in the rhythm of the Liturgy of the Hours to achieve peace
 ## Use cases
 
 ![Use cases](./doc/img/usecases.png)
+
+## Class diagram
+
+![Class diagram](./doc/img/class-diagram.png)
