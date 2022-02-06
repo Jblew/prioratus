@@ -3,8 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
 } from "typeorm";
 import * as domain from "@/domain";
+import { Account } from "./Account";
+
 @Entity()
 export class User implements domain.User {
   @PrimaryGeneratedColumn("uuid")
@@ -18,4 +21,7 @@ export class User implements domain.User {
 
   @CreateDateColumn()
   created!: Date;
+
+  @OneToMany((type) => Account, (account) => account.user)
+  accounts!: Account[];
 }

@@ -1,11 +1,11 @@
 import { Named } from "@/utils";
-import { MessagingProviderID } from ".";
-import { UserID } from "./User";
+import { User } from "./User";
+import { MessagingProviderID } from "./Messaging";
 
 export interface Account {
   ID: AccountID;
   providerID: MessagingProviderID;
-  userID: UserID;
+  user: User;
 }
 
 export type AccountID = Named<string, "accountID">;
