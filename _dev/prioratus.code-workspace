@@ -11,6 +11,8 @@
 		],
 		"editor.formatOnSave": true,
 		"editor.formatOnSaveMode": "file",
-		"editor.formatOnPaste": true
+		"editor.formatOnPaste": true,
+		"plantuml.diagramsRoot": "doc/uml",
+		"plantuml.exportOutDir": "doc/img"
 	}
 }
