@@ -1,16 +1,23 @@
 @startuml usecases
 left to right direction
-skinparam packageStyle rectangle
+
+skinparam usecase {
+    BackgroundColor<< Done >> LightGreen
+    BackgroundColor<< Wip >> LightBlue
+}
 
 usecase "Talk on chat" as UCTalkChat
-UCTalkChat <|-- (On FB Messenger)
-UCTalkChat <|-- (On Telegram)
+usecase UCChatMessenger as "On FB Messenger"
+UCTalkChat <|-- UCChatMessenger
+usecase UCChatTelegram as "On Telegram" << Wip >>
+UCTalkChat <|-- UCChatTelegram
 
 usecase "Receive notifications of liturgia horarum prayers" as UCReceive
 UCReceive <-. UCTalkChat :include
 :User: <-- UCReceive
-:User: --> (Create account on website)
-usecase "Create account by chat" as UCAccountChat
+usecase UCCreateAccountWebsite as "Create account on website" << Done >>
+:User: --> UCCreateAccountWebsite
+usecase "Create account by chat" as UCAccountChat << Wip >>
 UCAccountChat <-. UCTalkChat :include
 :User: --> UCAccountChat
 usecase UCConnectAccounts as "Connect website account 
