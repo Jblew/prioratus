@@ -10,4 +10,4 @@ Prioratus app: living in the rhythm of the Liturgy of the Hours to achieve peace
 
 ## Domain model
 
-![Domain model](./doc/img/domain-model.svg)
+![Domain model](./doc/uml/svg/domain-model.svg)
