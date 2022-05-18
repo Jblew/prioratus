@@ -11,6 +11,14 @@ async function run() {
   const port = process.env.PORT || 3000;
   const routeBase = process.env.ROUTE_BASE || "/";
 
+  await prisma.notification.create({
+    data: {
+      content: "Notification at " + new Date().toISOString()
+    }
+  })
+  const notificationCount = await prisma.notification.count()
+  console.log(`Database contains ${notificationCount} notification`)
+
   app.use(
     morgan(":method :url :status :res[content-length] - :response-time ms")
   );
