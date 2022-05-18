@@ -1,8 +1,14 @@
 {
 	"folders": [
-		{ "path": ".." },
-		{ "path": "../services/backend" },
-		{ "path": "../services/frontend" }
+		{
+			"path": ".."
+		},
+		{
+			"path": "../backend"
+		},
+		{
+			"path": "../frontend"
+		}
 	],
 	"settings": {
 		"github-actions.workflows.pinned.workflows": [
