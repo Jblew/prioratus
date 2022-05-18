@@ -1,13 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import {TopNav} from './layout';
+import { TopNav } from './layout';
+import Button from "react-bootstrap/Button";
 
 function App() {
   return (
     <>
-      <TopNav/>
+      <TopNav />
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -22,6 +21,7 @@ function App() {
           >
             Learn React
           </a>
+          <Button variant="primary">Primary</Button>
         </header>
       </div>
     </>

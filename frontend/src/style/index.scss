@@ -1,0 +1,7 @@
+@import "variables";
+$theme-colors: (
+    "primary": #fffd27
+);
+@import "~bootstrap/scss/bootstrap";
+
+@import "app"
