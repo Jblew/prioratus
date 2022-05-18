@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/index.js"
+    "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/index.js",
+    "deploy-migration": "prisma migrate deploy",
+    "start:docker": "npm run deploy-migration && npm run start"
   },
   "dependencies": {
     "@prisma/client": "^3.14.0",
