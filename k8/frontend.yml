@@ -22,5 +22,5 @@ spec:
       restartPolicy: Always
       containers:
         - name: frontend
-          image: ghcr.io/jblew/prioratus-frontend:1.1.0
+          image: ghcr.io/jblew/prioratus-frontend:${DOCKER_IMAGE_SHA_TAG}
           ports: [{ containerPort: 80 }]
