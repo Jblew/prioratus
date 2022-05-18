@@ -1,0 +1,30 @@
+{
+  "short_name": "Prioratus",
+  "name": "Life in the rhythm of breviary",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": " 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "apple-touch-icon-1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "apple-touch-icon-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "apple-touch-icon-180.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#A76571",
+  "background_color": "#565676"
+}
