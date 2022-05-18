@@ -7,4 +7,4 @@ RUN npm ci
 ADD . /app/
 RUN npm run build
 
-CMD ["npm", "run", "start:docker"]
+CMD ["npm", "run", "start"]
