@@ -46,3 +46,10 @@ spec:
                 secretKeyRef:
                   name: oidc
                   key: client_id
+          volumeMounts:
+            - name: app-config
+              mountPath: /app-config
+      volumes:
+        - name: app-config
+          configMap:
+            name: config-prototype

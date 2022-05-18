@@ -1,0 +1,13 @@
+---
+user: email@registered.on.auth0
+timeZone: Europe/Warsaw
+hours:
+    officiumLectionis: 24:00
+    laudesMatutinae: 7:00
+    tertia: 9:00
+    sexta: 12:00
+    nona: 15:00
+    vespera: 18:00
+    completorium: 21:00
+---
+user: anotherUser
