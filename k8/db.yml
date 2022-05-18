@@ -31,7 +31,10 @@ spec:
           image: postgres:14.1-alpine
           env:
             - name: POSTGRES_PASSWORD
-              value: n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ
+              valueFrom:
+                secretKeyRef:
+                  name: dbpassword
+                  key: password
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               subPath: postgres
