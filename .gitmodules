@@ -1,6 +1,0 @@
-[submodule "services/backend"]
-	path = services/backend
-	url = git@github.com:Jblew/prioratus-backend.git
-[submodule "services/frontend"]
-	path = services/frontend
-	url = git@github.com:Jblew/prioratus-frontend.git
