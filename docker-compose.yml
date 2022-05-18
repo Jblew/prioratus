@@ -1,18 +1,8 @@
 version: "3.8"
 
 services:
-  # ingress:
-  #   image: ghcr.io/1myears/simple_router:1.2.3
-  #   ports:
-  #     - 80:80
-  #   environment:
-  #     PROXIES: >
-  #       [
-  #         { "base": "/api", "to": "http://backend:80" },
-  #         { "base": "", "to": "http://frontend:80" }
-  #       ]
   backend:
-    build: services/backend
+    build: backend
     environment:
       PORT: 80
       ROUTE_BASE: '/api'
@@ -21,13 +11,14 @@ services:
       OIDC_ISSUER_BASEURL: https://prioratus.eu.auth0.com
       OIDC_AUTH_SECRET: ${OIDC_AUTH_SECRET}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
+      DATABASE_URL: postgresql://postgres:n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ@db:5432/postgres?schema=public
     ports:
       - 3002:80
     depends_on:
       - db
 
   frontend:
-    build: services/frontend
+    build: frontend
     ports:
       - 3000:80
 
@@ -37,7 +28,18 @@ services:
     environment:
       POSTGRES_PASSWORD: n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ
     volumes:
-      - db_pgdata:/var/lib/postgresql/data
+      - dbpgdata:/var/lib/postgresql/data
+
+  migrate:
+    build: backend
+    entrypoint: npx prisma migrate
+    command: specify your own
+    volumes:
+      - ./backend/prisma:/app/prisma
+    environment:
+      DATABASE_URL: postgresql://postgres:n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ@db:5432/postgres?schema=public
+    depends_on:
+      - db
 
 volumes:
-  db_pgdata:
+  dbpgdata:
