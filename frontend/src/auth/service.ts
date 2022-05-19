@@ -1,47 +1,35 @@
-import { ApiHTTPError, getFromApi } from "api";
+import { ApiHTTPError, getFromApi } from "api"
 import {
   createMachine,
   DoneInvokeEvent,
   interpret,
   assign,
   State,
-} from "xstate";
-
-export interface UserProfile {
-  name: string;
-  nickname: string;
-  picture?: string;
-  email: string;
-}
+} from "xstate"
+import { AuthState, UserProfile } from "./types"
 
 export function getLogoutURL() {
-  return `${process.env.REACT_APP_LOGOUT_URL}?returnTo=${window.location.origin}`;
+  return `${process.env.REACT_APP_LOGOUT_URL}?returnTo=${window.location.origin}`
 }
 
 export function getLoginURL() {
-  return `${process.env.REACT_APP_LOGIN_URL}`;
-}
-
-export type AuthStateName = "loading" | "error" | "loggedIn" | "loggedOut";
-export interface AuthState {
-  state: AuthStateName;
-  profile?: UserProfile;
+  return `${process.env.REACT_APP_LOGIN_URL}`
 }
 
 export function getAuthState(): AuthState {
-  const interpreter = getOrStartAuthMachineInterpreter();
-  return machineStateToAuthState(interpreter.state as any);
+  const interpreter = getOrStartAuthMachineInterpreter()
+  return machineStateToAuthState(interpreter.state as any)
 }
 
 export function onAuthStateChanged(
   subscriberFn: (authState: AuthState) => void
 ): { unsubscribe(): void } {
-  const interpreter = getOrStartAuthMachineInterpreter();
+  const interpreter = getOrStartAuthMachineInterpreter()
   return interpreter.subscribe((state) => {
     if (state.changed) {
-      subscriberFn(machineStateToAuthState(state as any));
+      subscriberFn(machineStateToAuthState(state as any))
     }
-  });
+  })
 }
 
 const authMachine = createMachine(
@@ -96,24 +84,24 @@ const authMachine = createMachine(
       resetProfile: assign<any>({ profile: undefined }),
     },
   }
-);
+)
 
 function interpretAuthMachine() {
-  return interpret(authMachine);
+  return interpret(authMachine)
 }
 
 function getOrStartAuthMachineInterpreter(): ReturnType<
   typeof interpretAuthMachine
 > {
   if (!(window as any).authMachineInterpreter) {
-    (window as any).authMachineInterpreter = interpretAuthMachine().start();
+    (window as any).authMachineInterpreter = interpretAuthMachine().start()
   }
-  return (window as any).authMachineInterpreter;
+  return (window as any).authMachineInterpreter
 }
 
 function machineStateToAuthState(state: State<any>): AuthState {
   return {
     state: state.value as any,
     profile: (state.context as any).profile,
-  };
+  }
 }
