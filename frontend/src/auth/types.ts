@@ -3,6 +3,7 @@ export interface UserProfile {
     nickname: string
     picture?: string
     email: string
+    [k: string]: unknown
 }
 
 export type AuthStateName = "loading" | "error" | "loggedIn" | "loggedOut"
