@@ -9,13 +9,11 @@ import {
   AuthStateName,
 } from "./types"
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
 
 type StateComponent = (params: {
-  t: (l: string) => string
   authState: AuthState,
   links: { login: string, logout: string }
-}) => JSX.Element | JSX.Element[]
+}) => JSX.Element
 
 export function AuthSwitch(
   { loading, error, loggedIn, loggedOut, unknown }:
@@ -24,7 +22,6 @@ export function AuthSwitch(
   const stateComponents: Record<AuthStateName | "unknown", StateComponent> = {
     loading, error, loggedIn, loggedOut, unknown
   }
-  const { t } = useTranslation()
   const [authState, setAuthState] = useState(getAuthState())
   useEffect(() => {
     const { unsubscribe } = onAuthStateChanged((authState) =>
@@ -41,8 +38,8 @@ export function AuthSwitch(
   }
   const stateComponent = stateComponents[authState.state]
   if (stateComponent) {
-    return stateComponent({ t, authState, links })
+    return stateComponent({ authState, links })
   } else {
-    return stateComponents.unknown({ t, authState, links })
+    return stateComponents.unknown({ authState, links })
   }
 }

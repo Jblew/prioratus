@@ -1,3 +1,3 @@
 export * from './types'
 export * from './service'
-export * from './AuthGuard'
+export * from './AuthSwitch'
