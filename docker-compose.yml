@@ -5,6 +5,7 @@ services:
     build: backend
     environment:
       PORT: 80
+      USER_CONFIGS_PATH: /app/config/config.yml
       ROUTE_BASE: '/api'
       BASE_URL: http://localhost:3002/api
       FRONTEND_RECIRECT_URL: http://localhost:3000/
@@ -14,6 +15,8 @@ services:
       DATABASE_URL: postgresql://postgres:n6uHLuSK9vs9fnutd6Yc3MTU3NAYte6KTrQ@db:5432/postgres?schema=public
     ports:
       - 3002:80
+    volumes:
+      - ./config-prototype/config.yml:/app/config/config.yml:ro
     depends_on:
       - db
 

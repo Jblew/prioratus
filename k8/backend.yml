@@ -32,6 +32,8 @@ spec:
                 secretKeyRef:
                   name: dburl
                   key: url
+            - name: USER_CONFIGS_PATH
+              value: /app-config/config.yml
             - name: BASE_URL
               value: "https://przeor.jblewandowski.com/api"
             - name: FRONTEND_RECIRECT_URL
