@@ -22,7 +22,10 @@
 		"plantuml.exportOutDir": "doc/img",
 		"vs-kubernetes": {
 			"vs-kubernetes.kubeconfig": "_dev/kubeconfig.yml",
-		}
+		},
+		"typescript.format.enable": true,
+		"typescript.format.semicolons": "remove",
+		"typescript.preferences.quoteStyle": "double"
 	},
 	"extensions": {
 		"recommendations": [
