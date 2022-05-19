@@ -5,18 +5,19 @@ import Nav from "react-bootstrap/Nav"
 import { useTranslation } from "react-i18next"
 import { LanguageSwitcher } from "./translations"
 import { AuthSwitch } from "./auth"
+import { FaUser } from "react-icons/fa"
 
 export function TopNav() {
   const { t } = useTranslation()
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="top-nav" bg="light" expand="md">
       <Container>
         <Navbar.Brand href="#home">{t("Prioratus")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            {/* <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#link">Link</Nav.Link> */}
           </Nav>
           <Nav>
             <AuthDropdown />
@@ -32,27 +33,27 @@ function AuthDropdown() {
   const { t } = useTranslation()
   return <AuthSwitch
     loading={() => (
-      <NavDropdown title={t("Loading login...")}>
-        <NavDropdown.Item>{t("Loading login...")}</NavDropdown.Item>
+      <NavDropdown title={<><FaUser /> {t("Loading login...")}</>}>
+        <NavDropdown.Item><FaUser /> {t("Loading login...")}</NavDropdown.Item>
       </NavDropdown>
     )}
     error={() => (
-      <NavDropdown title={t("Login error")}>
-        <NavDropdown.Item>{t("Login error")}</NavDropdown.Item>
+      <NavDropdown title={<><FaUser /> {t("Login error")}</>}>
+        <NavDropdown.Item><FaUser /> {t("Login error")}</NavDropdown.Item>
       </NavDropdown>
     )}
     loggedIn={({ authState, links }) => (
-      <NavDropdown title={authState.profile!.name}>
+      <NavDropdown title={<><FaUser /> {authState.profile!.name}</>}>
         <NavDropdown.Item href={links.logout}>
           {t("Log out")}
         </NavDropdown.Item>
       </NavDropdown>
     )}
     loggedOut={({ links }) => (
-      <Nav.Link href={links.login}>{t("Log in")}</Nav.Link>
+      <Nav.Link href={links.login}><FaUser /> {t("Log in")}</Nav.Link>
     )}
     unknown={() => (
-      <Nav.Item>Unknown auth state</Nav.Item>
+      <Nav.Item><FaUser /> Unknown auth state</Nav.Item>
     )}
   />
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import { TopNav } from './layout';
-import Button from "react-bootstrap/Button";
+import React from 'react'
+import logo from './logo.svg'
+import { TopNav } from './TopNav'
+import Button from "react-bootstrap/Button"
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         </header>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

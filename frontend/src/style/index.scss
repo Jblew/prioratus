@@ -1,7 +1,9 @@
 @import "variables";
-$theme-colors: (
-    "primary": #fffd27
-);
+// Palettes: #d8dcff, #aeadf0b, #c38d94, #a76571, #565676
+$body-bg: #565676;
+$primary: #fffd27; // #fffd00
+
 @import "~bootstrap/scss/bootstrap";
 
-@import "app"
+@import "app";
+@import "top-nav";

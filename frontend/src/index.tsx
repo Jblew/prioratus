@@ -1,18 +1,36 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./style/index.scss";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import "./translations";
+import React from "react"
+import ReactDOM from "react-dom"
+import { TopNav } from './TopNav'
+import reportWebVitals from "./reportWebVitals"
+import { BrowserRouter } from "react-router-dom"
+import { AuthSwitch } from "auth"
+
+import "./style/index.scss"
+import "./translations"
+import { PageIntroduction } from "pages/PageIntroduction"
+import { PageErrorAuth } from "pages/PageErrorAuth"
+import { PageDays } from "pages/PageDays"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
-);
+)
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function App() {
+  return <>
+    <TopNav />
+    <AuthSwitch
+      loading={() => (<PageIntroduction />)}
+      error={() => (<PageErrorAuth />)}
+      loggedOut={() => (<PageIntroduction />)}
+      loggedIn={() => (<PageDays />)}
+      unknown={() => (<PageErrorAuth />)}
+    />
+  </>
+}
+
+reportWebVitals(console.log)
