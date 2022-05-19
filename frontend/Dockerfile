@@ -1,12 +1,12 @@
 FROM node:14-alpine
 
 WORKDIR /app
-ADD package.json package-lock.json /app/
+COPY package.json package-lock.json /app/
 RUN npm ci
-ADD . /app
+COPY . /app
 RUN npm run build
 
 
 FROM nginx:alpine
-COPY --from=0 /app/build/ /usr/share/nginx/html/
-RUN ls /usr/share/nginx/html/
+COPY --from=0 /app/build/ /html/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
