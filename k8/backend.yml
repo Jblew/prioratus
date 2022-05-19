@@ -25,7 +25,7 @@ spec:
           image: ghcr.io/jblew/prioratus-backend:${DOCKER_IMAGE_SHA_TAG}
           resources:
             limits:
-              cpu: "10m"
+              cpu: "40m"
               memory: "100Mi"
             requests:
               cpu: "8m"
