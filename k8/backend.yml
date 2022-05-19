@@ -27,6 +27,9 @@ spec:
             limits:
               cpu: "10m"
               memory: "100Mi"
+            requests:
+              cpu: "8m"
+              memory: "20Mi"
           ports: [{ containerPort: 80 }]
           env:
             - name: PORT
