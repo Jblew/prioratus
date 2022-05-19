@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { TopNav } from './TopNav'
 import reportWebVitals from "./reportWebVitals"
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
+import { Route, Routes, Navigate, HashRouter } from "react-router-dom"
 import { AuthSwitch, UserCondition } from "auth"
 
 import "./style/index.scss"
@@ -14,9 +14,9 @@ import { PageClosedBeta } from "pages/PageClosedBeta"
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById("root")
 )
