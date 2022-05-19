@@ -4,8 +4,10 @@ $body-bg: #565676;
 $body-color: white;
 $primary: #fffd27; // #fffd00
 $secondary: #AEADF0;
+$link-color: $body-color;
 
 @import "~bootstrap/scss/bootstrap";
 
 @import "app";
 @import "top-nav";
+@import "hora";
