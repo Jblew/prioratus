@@ -23,4 +23,8 @@ spec:
       containers:
         - name: frontend
           image: ghcr.io/jblew/prioratus-frontend:${DOCKER_IMAGE_SHA_TAG}
+          resources:
+            limits:
+              cpu: "0.4"
+              memory: "200Mi"
           ports: [{ containerPort: 80 }]
