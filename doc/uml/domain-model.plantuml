@@ -1,37 +1,22 @@
 @startuml domain model
 left to right direction
 
-class Message << table >> {
-    +id: UUID
-    +time: Date
-    +text: string
-    +providerID: string
-    +account: Account
-    +direction: user|system
-    +responseTo?: Message
-}
-
-class MessagingProvider << abstract >> {
-    +id: string
-}
-
-class Account << table >> {
-    +id: UUID
-    +user: User
-    +providerID: string
-    +providerMetadata: JSON string
-}
-
-class User << table >> {
+class User << auth0 >> {
     +id: UUID
     +displayName: string
     +email: string
     +createdDate: Date
 }
 
-Message -- "+providerID" MessagingProvider
-Message "+account" --- Account
-Account --- "+providerID" MessagingProvider
-Account ---- "+user" User
+class UserConfig << yaml >> {
+    +email: string
+    +timeZone: TZstring
+    +horas: Hora
+}
+UserConfig "+email" --- "+email" User
+
+class Hora << yaml >> {
+    time
+}
 
 @enduml
