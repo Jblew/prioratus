@@ -43,7 +43,7 @@ spec:
               value: /app-config/config.yml
             - name: BASE_URL
               value: "https://przeor.jblewandowski.com/api"
-            - name: FRONTEND_RECIRECT_URL
+            - name: FRONTEND_REDIRECT_URL
               value: "https://przeor.jblewandowski.com/"
             - name: OIDC_ISSUER_BASEURL
               valueFrom:
