@@ -1,17 +1,19 @@
 import * as express from "express"
-import { interfaces, controller, httpGet, httpPost, httpDelete, request, queryParam, response, requestParam } from "inversify-express-utils"
-import { injectable, inject } from "inversify"
+import { interfaces, controller, httpGet, request, response, BaseHttpController } from "inversify-express-utils"
+import { inject } from "inversify"
 import { envMust } from "@/utils"
 import { authOr403 } from "@/auth"
 import { UserConfigRepository } from "@/domain"
 
-@controller("/")
-export class RootController implements interfaces.Controller {
+@controller("")
+export class RootController extends BaseHttpController implements interfaces.Controller {
 
     constructor(
         @inject(UserConfigRepository)
         private userConfigRepo: UserConfigRepository
-    ) { }
+    ) {
+        super()
+    }
 
     @httpGet("/")
     private index(@request() req: express.Request, @response() res: express.Response) {
@@ -21,7 +23,7 @@ export class RootController implements interfaces.Controller {
 
     @httpGet("/health")
     private health(): object {
-        return { ok: true }
+        return this.ok({ ok: true })
     }
 
     @httpGet("/profile", authOr403())
@@ -32,6 +34,6 @@ export class RootController implements interfaces.Controller {
             ...user,
             enrolledInBeta,
         }
-        return profile
+        return this.ok(profile)
     }
 }
