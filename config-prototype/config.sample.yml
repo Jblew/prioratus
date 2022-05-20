@@ -1,5 +1,5 @@
 ---
-user: email@registered.on.auth0
+email: email@registered.on.auth0
 timeZone: Europe/Warsaw
 hours:
     officiumLectionis: 24:00
@@ -10,4 +10,4 @@ hours:
     vespera: 18:00
     completorium: 21:00
 ---
-user: anotherUser
+email: anotherUser

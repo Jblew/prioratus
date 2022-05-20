@@ -1,4 +1,2 @@
-export * from "./LiturgiaHorarum";
-export * from "./Messaging";
-export * from "./User";
-export * from "./Account";
+export * from './Config'
+export * from './UserConfig'

@@ -1,20 +1,7 @@
 import { DateTime } from 'luxon'
+import { Config } from "./domain"
 
-export interface Config {
-    horas: Record<string, HoraConfig>
-}
-
-export interface HoraConfig {
-    key: string,
-    name: string,
-    shortName: string,
-    defaultHour: string,
-    link: Record<LangCode, { href: (dt: DateTime) => string }>
-}
-
-export type LangCode = string
-
-export const config: Config = {
+export const staticConfig: Config = {
     horas: {
         officiumLectionis: {
             key: "officiumLectionis",
