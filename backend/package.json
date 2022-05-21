@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/index.js",
+    "test": "TS_NODE_BASEURL=./dist mocha --require ts-node/register -r tsconfig-paths/register \"src/**/*.spec.ts\"",
     "deploy-migration": "prisma migrate deploy",
     "start:docker": "npm run deploy-migration && npm run start"
   },
@@ -14,6 +15,7 @@
     "express": "^4.18.1",
     "express-openid-connect": "^2.7.2",
     "inversify": "^6.0.1",
+    "inversify-binding-decorators": "^4.0.0",
     "inversify-express-utils": "^6.4.3",
     "luxon": "^2.4.0",
     "morgan": "1.10.0",
@@ -21,10 +23,14 @@
     "yaml": "^2.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.1",
     "@types/express": "4.17.13",
     "@types/luxon": "^2.3.2",
+    "@types/mocha": "^9.1.1",
     "@types/morgan": "1.9.3",
     "@types/node": "^17.0.34",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
     "prisma": "^3.14.0",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^4.0.0",
